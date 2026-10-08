@@ -1,0 +1,7 @@
+Write-Host 'AISYS Rollback - demonstration runbook'
+Write-Host '1. Stop the service.'
+Write-Host '2. Restore the pre-change database backup.'
+Write-Host '3. Restore the previous application release.'
+Write-Host '4. Run smoke tests.'
+Write-Host '5. Verify audit logs and baseline record counts.'
+Write-Host '6. Start the service.'

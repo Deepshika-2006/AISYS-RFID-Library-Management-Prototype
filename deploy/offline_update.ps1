@@ -1,0 +1,7 @@
+Write-Host 'AISYS Offline Update - demonstration runbook'
+Write-Host '1. Stop the Django service.'
+Write-Host '2. Copy the approved release package into the deployment directory.'
+Write-Host '3. Activate the offline virtual environment and install pinned wheels from the local wheelhouse.'
+Write-Host '4. Run: python manage.py migrate'
+Write-Host '5. Run smoke tests: python manage.py test tests'
+Write-Host '6. Start the service and verify /health/.'

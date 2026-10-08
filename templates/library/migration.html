@@ -1,0 +1,161 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- =========================================================
+     PAGE HEADING
+     
+     Displays the title of the controlled data migration page.
+     ========================================================= -->
+<h1>Controlled Data Migration</h1>
+
+
+<!-- =========================================================
+     IMPORT UTILITY CARD
+     
+     Explains how to run the library data import utility
+     from the Django terminal.
+     ========================================================= -->
+<div class="card">
+
+    <!-- Section title -->
+    <h2>Import utility</h2>
+
+
+    <!-- Explanation -->
+    <p>
+        Run from terminal:
+    </p>
+
+
+    <!-- =====================================================
+         IMPORT COMMAND
+         
+         This command runs the custom Django management
+         command that imports library records from Excel.
+         ===================================================== -->
+    <pre>
+python manage.py import_library sample_data/library_records.xlsx
+    </pre>
+
+
+    <!-- =====================================================
+         IMPORT DESCRIPTION
+         
+         Explains the validation and reconciliation process.
+         ===================================================== -->
+    <p>
+        The importer validates required columns,
+        rejects invalid rows, detects duplicates,
+        imports valid synthetic records inside a transaction,
+        and records reconciliation statistics.
+    </p>
+
+
+    <!-- =====================================================
+         DEMO DATA BUTTON
+         
+         Clicking this link opens the demo data seeding
+         endpoint.
+
+         /demo/run/1/
+         is handled by your Django URL/view.
+         ===================================================== -->
+    <a class="button" href="/demo/run/1/">
+        Seed demo data
+    </a>
+
+</div>
+
+
+<!-- =========================================================
+     MIGRATION RUN HISTORY
+     
+     Displays the results of previous migration/import runs.
+     ========================================================= -->
+<div class="card">
+
+    <table>
+
+
+        <!-- =================================================
+             TABLE HEADER
+             ================================================= -->
+        <tr>
+
+            <th>Run</th>
+
+            <th>Total</th>
+
+            <th>Valid</th>
+
+            <th>Duplicates</th>
+
+            <th>Rejected</th>
+
+            <th>Imported</th>
+
+        </tr>
+
+
+        <!-- =================================================
+             MIGRATION RUN LOOP
+             
+             "runs" is provided by the Django view.
+
+             Each "r" represents one migration/import run.
+             ================================================= -->
+        {% for r in runs %}
+
+        <tr>
+
+
+            <!-- Date and time of the migration run -->
+            <td>
+                {{r.created_at}}
+            </td>
+
+
+            <!-- Total number of rows processed -->
+            <td>
+                {{r.total_rows}}
+            </td>
+
+
+            <!-- Number of valid rows -->
+            <td>
+                {{r.valid_rows}}
+            </td>
+
+
+            <!-- Number of duplicate rows detected -->
+            <td>
+                {{r.duplicate_rows}}
+            </td>
+
+
+            <!-- Number of rejected/invalid rows -->
+            <td>
+                {{r.rejected_rows}}
+            </td>
+
+
+            <!-- Number of successfully imported rows -->
+            <td>
+                {{r.imported_rows}}
+            </td>
+
+
+        </tr>
+
+        <!-- End migration runs loop -->
+        {% endfor %}
+
+
+    </table>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,624 @@
+
+/* =========================================================
+   AISYS RFID LIBRARY
+   Global Application Styles
+   ========================================================= */
+
+
+/* =========================================================
+   1. ROOT VARIABLES
+   ========================================================= */
+
+:root {
+    --primary: #174a7c;
+    --primary-light: #eaf3fb;
+    --primary-dark: #10395f;
+
+    --accent: #1769aa;
+
+    --success: #16834f;
+    --success-bg: #e8f7ef;
+
+    --warning: #b96b00;
+    --warning-bg: #fff4df;
+
+    --danger: #c53030;
+    --danger-bg: #fdeaea;
+
+    --text: #172033;
+    --text-light: #68758a;
+    --text-muted: #8a96a8;
+
+    --background: #f4f7fb;
+    --card: #ffffff;
+    --border: #e3e9f0;
+
+    --shadow: 0 4px 18px rgba(23, 42, 70, 0.07);
+    --shadow-hover: 0 8px 24px rgba(23, 42, 70, 0.12);
+
+    --radius: 12px;
+}
+
+
+/* =========================================================
+   2. GLOBAL RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    margin: 0;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   3. HEADER / NAVIGATION
+   ========================================================= */
+
+header {
+    background: var(--primary);
+    color: white;
+    padding: 14px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    flex-wrap: wrap;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+
+/* Application name */
+
+header b {
+    font-size: 19px;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+}
+
+
+/* Navigation */
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+
+nav a {
+    color: rgba(255, 255, 255, 0.92);
+    text-decoration: none;
+    padding: 8px 11px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.13);
+    color: white;
+}
+
+
+/* Logout */
+
+nav a:last-child {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+
+/* =========================================================
+   4. MAIN CONTENT
+   ========================================================= */
+
+main {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 30px 22px 50px;
+}
+
+
+/* Page heading */
+
+h1 {
+    color: var(--primary);
+    font-size: 28px;
+    margin: 0 0 22px;
+    font-weight: 700;
+}
+
+
+h2 {
+    color: #20354d;
+    font-size: 18px;
+    margin-top: 0;
+}
+
+
+h3 {
+    color: #20354d;
+}
+
+
+/* Paragraph */
+
+p {
+    color: var(--text-light);
+}
+
+
+/* =========================================================
+   5. GRID
+   ========================================================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(210px, 1fr)
+    );
+    gap: 18px;
+}
+
+
+/* =========================================================
+   6. STATISTICS CARDS
+   ========================================================= */
+
+.stat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 21px;
+    box-shadow: var(--shadow);
+    transition: 0.2s ease;
+}
+
+
+.stat:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+
+.stat span {
+    display: block;
+    color: var(--text-light);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+
+.stat strong {
+    display: block;
+    font-size: 32px;
+    color: var(--primary);
+    line-height: 1.2;
+}
+
+
+/* =========================================================
+   7. CARDS
+   ========================================================= */
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    margin: 18px 0;
+    box-shadow: var(--shadow);
+}
+
+
+.card:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+
+/* =========================================================
+   8. BUTTONS
+   ========================================================= */
+
+.button,
+button {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 16px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+
+.button:hover,
+button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+
+.button:active,
+button:active {
+    transform: translateY(0);
+}
+
+
+/* Button group */
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+
+/* =========================================================
+   9. FORMS
+   ========================================================= */
+
+form {
+    width: 100%;
+}
+
+
+.formgrid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+
+label {
+    display: block;
+    margin: 8px 0;
+    color: #34445a;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+input,
+select {
+    width: 100%;
+    padding: 11px 12px;
+    margin: 6px 0;
+    border: 1px solid #ccd5e2;
+    border-radius: 8px;
+    background: white;
+    color: var(--text);
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+
+input:focus,
+select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.10);
+}
+
+
+/* =========================================================
+   10. SEARCH
+   ========================================================= */
+
+.search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+
+.search input {
+    flex: 1;
+    margin: 0;
+}
+
+
+.search button {
+    width: 120px;
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   11. TABLES
+   ========================================================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+
+th,
+td {
+    padding: 13px 12px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+
+th {
+    background: #eef4fa;
+    color: #34516d;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+
+td {
+    color: #4a5568;
+}
+
+
+tr:hover td {
+    background: #fafcff;
+}
+
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   12. DJANGO MESSAGES
+   ========================================================= */
+
+.msg {
+    padding: 12px 15px;
+    background: #e8f4ff;
+    border-left: 4px solid var(--accent);
+    border-radius: 7px;
+    margin-bottom: 16px;
+    color: #24506f;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   13. LOGIN PAGE
+   ========================================================= */
+
+.login {
+    max-width: 420px;
+    margin: 90px auto;
+    text-align: left;
+}
+
+
+.login h1 {
+    margin-bottom: 5px;
+}
+
+
+.login p {
+    margin-top: 0;
+    margin-bottom: 22px;
+}
+
+
+.login input {
+    margin-bottom: 10px;
+}
+
+
+.login button {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+}
+
+
+.login small {
+    display: block;
+    margin-top: 15px;
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   14. CODE / ADAPTER RESPONSE
+   ========================================================= */
+
+pre {
+    background: #111827;
+    color: #e5e7eb;
+    padding: 16px;
+    border-radius: 9px;
+    white-space: pre-wrap;
+    overflow-x: auto;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   15. STATUS HELPERS
+   ========================================================= */
+
+.status-success {
+    color: var(--success);
+    background: var(--success-bg);
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+.status-warning {
+    color: var(--warning);
+    background: var(--warning-bg);
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+.status-danger {
+    color: var(--danger);
+    background: var(--danger-bg);
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   16. RESPONSIVE DESIGN
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    header {
+        padding: 14px 20px;
+    }
+
+    nav {
+        width: 100%;
+    }
+
+    main {
+        padding: 24px 16px 40px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    h1 {
+        font-size: 23px;
+    }
+
+
+    header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+
+    nav {
+        gap: 3px;
+    }
+
+
+    nav a {
+        font-size: 12px;
+        padding: 7px 8px;
+    }
+
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .formgrid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .search {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+
+    .search button {
+        width: 100%;
+    }
+
+
+    .card {
+        padding: 16px;
+        overflow-x: auto;
+    }
+
+
+    table {
+        min-width: 650px;
+    }
+
+
+    .login {
+        margin: 45px auto;
+    }
+
+}
+
+
+/* =========================================================
+   17. SMALL MOBILE DEVICES
+   ========================================================= */
+
+@media (max-width: 450px) {
+
+    main {
+        padding: 20px 12px 30px;
+    }
+
+
+    header b {
+        font-size: 17px;
+    }
+
+
+    .stat strong {
+        font-size: 28px;
+    }
+
+
+    .button,
+    button {
+        width: 100%;
+        text-align: center;
+    }
+
+
+    .buttons {
+        flex-direction: column;
+    }
+
+}

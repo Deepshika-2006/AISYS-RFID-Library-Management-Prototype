@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- =========================================================
+     PAGE HEADING
+     Main heading displayed on the Library Operations Dashboard.
+     ========================================================= -->
+<h1>Library Operations Dashboard</h1>
+
+
+<!-- =========================================================
+     STATISTICS SECTION
+     
+     Displays four important library statistics:
+     1. Total Books
+     2. Total Members
+     3. Currently Issued Books
+     4. RFID Events
+     
+     These values come from the Django backend.
+     ========================================================= -->
+<div class="grid">
+
+
+    <!-- =====================================================
+         TOTAL BOOKS
+         {{books}} contains the number of books.
+         ===================================================== -->
+    <div class="stat">
+
+        <span>Books</span>
+
+        <strong>
+            {{books}}
+        </strong>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOTAL MEMBERS
+         {{members}} contains the number of registered members.
+         ===================================================== -->
+    <div class="stat">
+
+        <span>Members</span>
+
+        <strong>
+            {{members}}
+        </strong>
+
+    </div>
+
+
+    <!-- =====================================================
+         ISSUED BOOKS
+         {{issued}} contains the number of currently issued books.
+         ===================================================== -->
+    <div class="stat">
+
+        <span>Issued</span>
+
+        <strong>
+            {{issued}}
+        </strong>
+
+    </div>
+
+
+    <!-- =====================================================
+         RFID EVENTS
+         {{events}} contains the number of RFID events.
+         ===================================================== -->
+    <div class="stat">
+
+        <span>RFID Events</span>
+
+        <strong>
+            {{events}}
+        </strong>
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================================
+     PRIORITY DEMO SCENARIOS
+     
+     Provides quick navigation to the different modules
+     required for demonstrating AC01–AC10.
+     
+     The data used by this project is synthetic/demo data.
+     ========================================================= -->
+<div class="card">
+
+    <h2>Priority demo scenarios</h2>
+
+
+    <!-- Description of the demonstration modules -->
+    <p>
+        Use the modules above to demonstrate AC01–AC10.
+        All seeded data is synthetic.
+    </p>
+
+
+    <!-- =====================================================
+         MODULE NAVIGATION BUTTONS
+         ===================================================== -->
+    <div class="buttons">
+
+
+        <!-- =================================================
+             AC01 - Migration
+             Opens the migration module.
+             ================================================= -->
+        <a class="button" href="/migration/">
+            AC01 Migration
+        </a>
+
+
+        <!-- =================================================
+             AC02 / AC05 / AC06 / AC07 - RFID
+             Opens the RFID module.
+             ================================================= -->
+        <a class="button" href="/rfid/">
+            AC02/05/06/07 RFID
+        </a>
+
+
+        <!-- =================================================
+             AC03 / AC04 - Circulation
+             Opens the circulation module.
+             ================================================= -->
+        <a class="button" href="/circulation/">
+            AC03/04 Circulation
+        </a>
+
+
+        <!-- =================================================
+             AC08 - Reports
+             Opens the reports and audit module.
+             ================================================= -->
+        <a class="button" href="/reports/">
+            AC08 Reports
+        </a>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     RECENT AUDIT ACTIVITY
+     
+     Displays the latest actions performed in the system.
+     
+     "recent" is a collection of audit records supplied
+     by the Django backend.
+     ========================================================= -->
+<div class="card">
+
+    <h2>Recent audit activity</h2>
+
+
+    <!-- =====================================================
+         AUDIT TABLE
+         ===================================================== -->
+    <table>
+
+
+        <!-- =================================================
+             TABLE HEADER
+             ================================================= -->
+        <tr>
+
+            <th>Time</th>
+
+            <th>Actor</th>
+
+            <th>Action</th>
+
+            <th>Details</th>
+
+        </tr>
+
+
+        <!-- =================================================
+             LOOP THROUGH RECENT AUDIT RECORDS
+             
+             {% for x in recent %}
+             repeats the table row for each audit record.
+             ================================================= -->
+        {% for x in recent %}
+
+        <tr>
+
+
+            <!-- Date and time of the activity -->
+            <td>
+                {{x.created_at}}
+            </td>
+
+
+            <!--
+                Actor who performed the action.
+
+                default:'system'
+                means that if actor is empty,
+                "system" will be displayed.
+            -->
+            <td>
+                {{x.actor|default:'system'}}
+            </td>
+
+
+            <!-- Action performed -->
+            <td>
+                {{x.action}}
+            </td>
+
+
+            <!-- Additional information about the action -->
+            <td>
+                {{x.details}}
+            </td>
+
+
+        </tr>
+
+
+        <!-- =================================================
+             EMPTY STATE
+             
+             If there are no audit records,
+             this message will be displayed instead.
+             ================================================= -->
+        {% empty %}
+
+        <tr>
+
+            <td colspan="4">
+                No audit events yet.
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+
+    </table>
+
+</div>
+
+
+{% endblock %}

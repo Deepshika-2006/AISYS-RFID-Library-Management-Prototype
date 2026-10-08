@@ -1,0 +1,290 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- =========================================================
+     PAGE HEADING
+     
+     Displays the title of the RFID Middleware Console.
+     ========================================================= -->
+<h1>RFID Middleware Console</h1>
+
+
+<!-- =========================================================
+     RFID OPERATIONS GRID
+     
+     Contains three different RFID-related mock operations:
+     
+     1. Reader Mock
+     2. Security Gate Mock
+     3. Smart-card Mock
+     
+     Each operation sends a POST request to the Django backend.
+     ========================================================= -->
+<div class="grid">
+
+
+    <!-- =====================================================
+         READER MOCK
+         
+         Simulates an RFID reader detecting a book tag.
+         ===================================================== -->
+    <div class="card">
+
+        <h2>Reader mock</h2>
+
+
+        <!-- RFID reader form -->
+        <form method="post">
+
+            <!-- Django CSRF security token -->
+            {% csrf_token %}
+
+
+            <!--
+                Hidden field tells the backend that
+                this request is a reader operation.
+            -->
+            <input
+                type="hidden"
+                name="mode"
+                value="read"
+            >
+
+
+            <!--
+                RFID tag ID.
+
+                Default value:
+                RFID-0001
+            -->
+            <input
+                name="tag_id"
+                value="RFID-0001"
+            >
+
+
+            <!-- Send RFID read request -->
+            <button>
+                Read tag
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         SECURITY GATE MOCK
+         
+         Simulates an RFID security gate detecting a tag
+         that is being removed without authorization.
+         ===================================================== -->
+    <div class="card">
+
+        <h2>Security gate mock</h2>
+
+
+        <!-- Security gate form -->
+        <form method="post">
+
+            <!-- Django CSRF security token -->
+            {% csrf_token %}
+
+
+            <!--
+                Hidden field identifies this request
+                as a security gate event.
+            -->
+            <input
+                type="hidden"
+                name="mode"
+                value="gate"
+            >
+
+
+            <!-- RFID tag involved in the gate event -->
+            <input
+                name="tag_id"
+                value="RFID-0001"
+            >
+
+
+            <!--
+                Sends an unauthorized RFID event
+                to the Django backend.
+            -->
+            <button>
+                Emit unauthorized event
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         SMART-CARD MOCK
+         
+         Simulates authentication using a staff smart card.
+         ===================================================== -->
+    <div class="card">
+
+        <h2>Smart-card mock</h2>
+
+
+        <!-- Smart-card authentication form -->
+        <form method="post">
+
+            <!-- Django CSRF security token -->
+            {% csrf_token %}
+
+
+            <!--
+                Identifies this request as
+                smart-card authentication.
+            -->
+            <input
+                type="hidden"
+                name="mode"
+                value="card"
+            >
+
+
+            <!-- Staff smart-card ID -->
+            <input
+                name="tag_id"
+                value="STAFF-001"
+            >
+
+
+            <!-- Authenticate smart card -->
+            <button>
+                Authenticate
+            </button>
+
+        </form>
+
+    </div>
+
+
+</div>
+
+
+<!-- =========================================================
+     ADAPTER RESPONSE
+     
+     This section appears only when the Django backend
+     provides a value in the "result" variable.
+     
+     {% if result %}
+     checks whether a response exists.
+     ========================================================= -->
+{% if result %}
+
+<div class="card">
+
+    <h2>Adapter response</h2>
+
+
+    <!--
+        Displays the response returned by the
+        RFID middleware/backend.
+
+        <pre> preserves formatting such as
+        line breaks and spaces.
+    -->
+    <pre>
+{{result}}
+    </pre>
+
+</div>
+
+{% endif %}
+
+
+<!-- =========================================================
+     RECENT RFID EVENTS
+     
+     Displays RFID events stored in the database.
+     ========================================================= -->
+<div class="card">
+
+    <h2>Recent RFID events</h2>
+
+
+    <table>
+
+
+        <!-- =================================================
+             TABLE HEADER
+             ================================================= -->
+        <tr>
+
+            <th>Time</th>
+
+            <th>Type</th>
+
+            <th>Tag</th>
+
+            <th>Accession</th>
+
+            <th>Payload</th>
+
+        </tr>
+
+
+        <!-- =================================================
+             RFID EVENT LOOP
+             
+             "events" is supplied by the Django view.
+             
+             Each "e" represents one RFID event.
+             ================================================= -->
+        {% for e in events %}
+
+        <tr>
+
+
+            <!-- Date and time of RFID event -->
+            <td>
+                {{e.created_at}}
+            </td>
+
+
+            <!-- RFID event type -->
+            <td>
+                {{e.event_type}}
+            </td>
+
+
+            <!-- RFID tag ID -->
+            <td>
+                {{e.tag_id}}
+            </td>
+
+
+            <!-- Book accession number associated with the tag -->
+            <td>
+                {{e.accession_no}}
+            </td>
+
+
+            <!-- Additional event information -->
+            <td>
+                {{e.payload}}
+            </td>
+
+
+        </tr>
+
+        {% endfor %}
+
+
+    </table>
+
+</div>
+
+
+{% endblock %}

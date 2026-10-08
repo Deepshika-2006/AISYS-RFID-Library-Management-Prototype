@@ -1,0 +1,163 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- =========================================================
+     PAGE HEADING
+     Displays the title of the Books / OPAC page
+     ========================================================= -->
+<h1>Books / OPAC</h1>
+
+
+<!-- =========================================================
+     SEARCH FORM
+     Allows the user to search books by:
+     - Title
+     - Accession number
+     - RFID tag
+
+     The value="{{q}}" keeps the searched value inside
+     the search box after submitting the form.
+     ========================================================= -->
+<form class="search">
+
+    <!-- Search input -->
+    <input
+        name="q"
+        value="{{q}}"
+        placeholder="Search title, accession or RFID"
+    >
+
+    <!-- Search button -->
+    <button>Search</button>
+
+</form>
+
+
+<!-- =========================================================
+     ADD NEW BOOK SECTION
+     This section allows the administrator/librarian
+     to create a new synthetic book.
+     ========================================================= -->
+<div class="card">
+
+    <h2>Add synthetic book</h2>
+
+    <!--
+        method="post" sends the form data to the Django backend.
+
+        {% csrf_token %}
+        protects the Django form against CSRF attacks.
+    -->
+    <form method="post" class="formgrid">
+
+        <!-- Django CSRF security token -->
+        {% csrf_token %}
+
+        <!--
+            {{form.as_p}}
+            Automatically displays all fields from the
+            Django form defined in forms.py.
+        -->
+        {{form.as_p}}
+
+        <!-- Submit button -->
+        <button>Create</button>
+
+    </form>
+
+</div>
+
+
+<!-- =========================================================
+     BOOK LIST / TABLE
+     Displays all books returned by the Django backend.
+     ========================================================= -->
+<div class="card">
+
+    <table>
+
+        <!-- =================================================
+             TABLE HEADER
+             ================================================= -->
+        <tr>
+            <th>Accession</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>RFID</th>
+        </tr>
+
+
+        <!-- =================================================
+             LOOP THROUGH ALL BOOKS
+
+             "books" is passed from the Django view.
+
+             {% for b in books %}
+             means Django will repeat the <tr> section
+             once for every book.
+             ================================================= -->
+        {% for b in books %}
+
+        <tr>
+
+            <!-- Book accession number -->
+            <td>
+                {{b.accession_no}}
+            </td>
+
+            <!-- Book title -->
+            <td>
+                {{b.title}}
+            </td>
+
+            <!-- Book category -->
+            <td>
+                {{b.category}}
+            </td>
+
+            <!-- Physical library location -->
+            <td>
+                {{b.location}}
+            </td>
+
+            <!-- =================================================
+                 BOOK STATUS
+
+                 Example:
+                 AVAILABLE
+                 ISSUED
+                 LOST
+
+                 If the book is reference-only, we additionally
+                 display "/ REFERENCE".
+                 ================================================= -->
+            <td>
+
+                {{b.status}}
+
+                {% if b.reference_only %}
+                    / REFERENCE
+                {% endif %}
+
+            </td>
+
+            <!-- RFID tag associated with the book -->
+            <td>
+                {{b.rfid_tag}}
+            </td>
+
+        </tr>
+
+        <!-- End of books loop -->
+        {% endfor %}
+
+    </table>
+
+</div>
+
+
+{% endblock %}

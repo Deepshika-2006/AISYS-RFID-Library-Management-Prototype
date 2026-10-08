@@ -1,0 +1,101 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- =========================================================
+     LOGIN CARD
+     
+     The "card" class applies the common card styling
+     from base.html / your CSS.
+     
+     The "login" class can be used for login-specific
+     styling.
+     ========================================================= -->
+<section class="card login">
+
+
+    <!-- =====================================================
+         APPLICATION TITLE
+         ===================================================== -->
+    <h1>AISYS RFID Library</h1>
+
+
+    <!-- Short description of the application -->
+    <p>
+        Technical evaluation prototype
+    </p>
+
+
+    <!-- =====================================================
+         LOGIN FORM
+         
+         method="post" sends the username and password
+         securely to the Django backend.
+         ===================================================== -->
+    <form method="post">
+
+
+        <!-- =================================================
+             CSRF TOKEN
+             
+             Django uses this token to protect the form
+             against Cross-Site Request Forgery attacks.
+             ================================================= -->
+        {% csrf_token %}
+
+
+        <!-- =================================================
+             USERNAME INPUT
+             
+             name="username" allows Django's authentication
+             system to identify the username field.
+             
+             required means the user cannot submit the
+             form without entering a username.
+             ================================================= -->
+        <input
+            name="username"
+            placeholder="Username"
+            required
+        >
+
+
+        <!-- =================================================
+             PASSWORD INPUT
+             
+             type="password" hides the password characters
+             while the user is typing.
+             ================================================= -->
+        <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+        >
+
+
+        <!-- Submit login form -->
+        <button>
+            Sign in
+        </button>
+
+
+    </form>
+
+
+    <!-- =====================================================
+         DEMO LOGIN INFORMATION
+         
+         Displays the credentials intended for the
+         technical evaluation/demo.
+         ===================================================== -->
+    <small>
+        Demo: aisys_admin / AISYS-Demo-2026
+    </small>
+
+
+</section>
+
+
+{% endblock %}

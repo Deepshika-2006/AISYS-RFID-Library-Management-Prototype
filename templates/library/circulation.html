@@ -1,0 +1,211 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- =========================================================
+     PAGE HEADING
+     Displays the title of the Circulation page.
+     ========================================================= -->
+<h1>Circulation</h1>
+
+
+<!-- =========================================================
+     CIRCULATION ACTION CARD
+     This section is used for:
+     1. Checkout
+     2. Renew
+     3. Check-in
+
+     The form sends the selected book, member and action
+     to the Django backend using POST.
+     ========================================================= -->
+<div class="card">
+
+    <h2>Checkout / Check-in / Renew</h2>
+
+
+    <!-- =====================================================
+         CIRCULATION FORM
+
+         method="post" sends the selected information
+         to the Django backend.
+         ===================================================== -->
+    <form method="post">
+
+        <!-- Django CSRF security token -->
+        {% csrf_token %}
+
+
+        <!-- =================================================
+             BOOK SELECTION
+
+             "books" is provided by the Django view.
+
+             Each book contains:
+             - id
+             - accession_no
+             - title
+             ================================================= -->
+        <label>
+            Book
+
+            <select name="book_id">
+
+                {% for b in books %}
+
+                <!--
+                    The book ID is sent to the backend.
+                    The user sees the accession number and title.
+                -->
+                <option value="{{b.id}}">
+                    {{b.accession_no}} — {{b.title}}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </label>
+
+
+        <!-- =================================================
+             MEMBER SELECTION
+
+             "members" is provided by the Django view.
+
+             Each member contains:
+             - id
+             - card_no
+             - name
+             ================================================= -->
+        <label>
+            Member
+
+            <select name="member_id">
+
+                {% for m in members %}
+
+                <!--
+                    The member ID is submitted to Django.
+                    The user sees the card number and name.
+                -->
+                <option value="{{m.id}}">
+                    {{m.card_no}} — {{m.name}}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </label>
+
+
+        <!-- =================================================
+             ACTION SELECTION
+
+             The user can perform three operations:
+
+             CHECKOUT → Issue a book
+             RENEW    → Extend the due date
+             CHECKIN  → Return a book
+             ================================================= -->
+        <label>
+            Action
+
+            <select name="action">
+
+                <option>CHECKOUT</option>
+                <option>RENEW</option>
+                <option>CHECKIN</option>
+
+            </select>
+
+        </label>
+
+
+        <!-- Submit the selected circulation operation -->
+        <button>Execute</button>
+
+    </form>
+
+</div>
+
+
+<!-- =========================================================
+     CIRCULATION HISTORY
+
+     Displays previously performed circulation operations.
+     ========================================================= -->
+<div class="card">
+
+    <table>
+
+        <!-- =================================================
+             TABLE HEADER
+             ================================================= -->
+        <tr>
+
+            <th>Time</th>
+            <th>Action</th>
+            <th>Book</th>
+            <th>Member</th>
+            <th>Due</th>
+
+        </tr>
+
+
+        <!-- =================================================
+             CIRCULATION RECORD LOOP
+
+             "records" is provided by the Django view.
+
+             Django repeats this row for every circulation
+             record stored in the database.
+             ================================================= -->
+        {% for r in records %}
+
+        <tr>
+
+            <!-- Date and time of the operation -->
+            <td>
+                {{r.created_at}}
+            </td>
+
+
+            <!--
+                Operation performed:
+                CHECKOUT / CHECKIN / RENEW
+            -->
+            <td>
+                {{r.action}}
+            </td>
+
+
+            <!-- Book involved in the transaction -->
+            <td>
+                {{r.book}}
+            </td>
+
+
+            <!-- Member involved in the transaction -->
+            <td>
+                {{r.member}}
+            </td>
+
+
+            <!-- Due date of the book -->
+            <td>
+                {{r.due_date}}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,148 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- =========================================================
+     PAGE HEADING
+     Displays the title of the Members page.
+     ========================================================= -->
+<h1>Members</h1>
+
+
+<!-- =========================================================
+     CREATE MEMBER SECTION
+     
+     This form allows the librarian/administrator to
+     create a new library member.
+     ========================================================= -->
+<div class="card">
+
+    <!-- =====================================================
+         MEMBER CREATION FORM
+         
+         method="post" sends the submitted member information
+         to the Django backend.
+         ===================================================== -->
+    <form method="post" class="formgrid">
+
+        <!-- =================================================
+             CSRF SECURITY TOKEN
+             
+             Django uses this token to protect the form
+             from Cross-Site Request Forgery attacks.
+             ================================================= -->
+        {% csrf_token %}
+
+
+        <!-- =================================================
+             DJANGO FORM
+             
+             {{form.as_p}} automatically generates the
+             form fields defined in your Django forms.py.
+
+             Django wraps each field inside a paragraph.
+             ================================================= -->
+        {{form.as_p}}
+
+
+        <!-- Submit button -->
+        <button>
+            Create member
+        </button>
+
+    </form>
+
+</div>
+
+
+<!-- =========================================================
+     MEMBERS LIST
+     
+     Displays all members retrieved from the database.
+     ========================================================= -->
+<div class="card">
+
+    <table>
+
+        <!-- =================================================
+             TABLE HEADER
+             ================================================= -->
+        <tr>
+
+            <th>Card</th>
+
+            <th>Name</th>
+
+            <th>Email</th>
+
+            <th>Blocked</th>
+
+            <th>Fine</th>
+
+        </tr>
+
+
+        <!-- =================================================
+             MEMBER LOOP
+             
+             "members" is passed from the Django view.
+
+             The table row will be repeated for every
+             member in the database.
+             ================================================= -->
+        {% for m in members %}
+
+        <tr>
+
+            <!-- Member library card number -->
+            <td>
+                {{m.card_no}}
+            </td>
+
+
+            <!-- Member's name -->
+            <td>
+                {{m.name}}
+            </td>
+
+
+            <!-- Member's email address -->
+            <td>
+                {{m.email}}
+            </td>
+
+
+            <!--
+                Shows whether the member is blocked.
+
+                Example:
+                True
+                False
+            -->
+            <td>
+                {{m.blocked}}
+            </td>
+
+
+            <!--
+                Displays the member's outstanding fine.
+
+                ₹ is the Indian Rupee symbol.
+                {{m.fine_amount}} comes from the database.
+            -->
+            <td>
+                ₹{{m.fine_amount}}
+            </td>
+
+        </tr>
+
+        <!-- End of members loop -->
+        {% endfor %}
+
+    </table>
+
+</div>
+
+
+{% endblock %}
